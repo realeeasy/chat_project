@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天应用</title>
+    <style>
+        /* 通用样式 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #74ABE2, #5563DE);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+            padding: 40px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #666;
+            margin: 15px 0;
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
+            background: #5563DE;
+            padding: 12px 30px;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        a:hover {
+            background: #3742a6;
+        }
+
+        .link-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .link-container a {
+            width: 180px;
+            text-align: center;
+        }
+
+        .user-info {
+            margin: 20px 0;
+            font-size: 20px;
+            color: #444;
+        }
+
+        .user-info span {
+            font-weight: bold;
+            color: #5563DE;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #999;
+        }
+
+        .footer a {
+            color: #5563DE;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #3742a6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>欢迎来到聊天应用 💬</h1>
+
+        {% if user.is_authenticated %}
+            <div class="user-info">
+                欢迎, <span>{{ user.username }}</span>!
+            </div>
+
+            <div class="link-container">
+                <a href="/chat/room1/">进入 Room1</a>
+                <a href="/login/">退出登录</a>
+            </div>
+
+        {% else %}
+            <div class="link-container">
+                <a href="/login/">登录</a>
+                <a href="/register/">注册新账户</a>
+            </div>
+        {% endif %}
+
+        <div class="footer">
+            <p>© 2025 ChatHouse. All rights reserved.</p>
+            <p><a href="https://github.com/realeeasy" target="_blank">GitHub</a> | <a href="https://your-website.com" target="_blank">官方网站</a></p>
+        </div>
+    </div>
+</body>
+</html>
