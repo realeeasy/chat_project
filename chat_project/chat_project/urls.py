@@ -22,11 +22,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("chat/", include("chat.urls")),
-    path("register/", views.register, name="register"),  
+    path("", include("chat.urls")),
     # ➡️ 将 Django 内置认证系统加入到路由中
     path("accounts/", include("django.contrib.auth.urls")),  
-    path("login/", views.user_login, name="login"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

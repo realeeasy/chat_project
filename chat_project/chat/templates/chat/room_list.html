@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>房间选择</title>
+    <style>
+        .room-card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            display: inline-block;
+            width: 300px;
+            box-shadow: 2px 2px 8px #aaa;
+            transition: 0.3s;
+            text-decoration: none;
+            color: black;
+        }
+        .room-card:hover {
+            box-shadow: 5px 5px 12px #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>选择房间</h1>
+
+    {% for room in rooms %}
+        <a href="{% url 'room' room.name %}" class="room-card">
+            <h2>{{ room.name }}</h2>
+            <p>{{ room.description }}</p>
+            <p>创建时间：{{ room.created_at|date:"Y-m-d H:i" }}</p>
+        </a>
+    {% empty %}
+        <p>暂无房间</p>
+    {% endfor %}
+</body>
+</html>

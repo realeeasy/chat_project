@@ -2,11 +2,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from .models import Room
 from django.contrib.auth import authenticate, login
 
 def index(request):
     return render(request, 'chat/index.html')
-
+def room_list(request):
+    """房间选择页面"""
+    rooms = Room.objects.all()  # 查询所有房间
+    return render(request, 'chat/room_list.html', {'rooms': rooms})
 @login_required
 def room(request, room_name):
     return render(request, 'chat/room.html', {'room_name': room_name})

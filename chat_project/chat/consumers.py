@@ -1,6 +1,10 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+import re
 
+def sanitize_room_name(room_name):
+    # 替换掉非 ASCII 字符，保留字母、数字、下划线、连字符和句点
+    return re.sub(r'[^a-zA-Z0-9_-]', '_', room_name)
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         # 从 URL 路由中获取房间名称
