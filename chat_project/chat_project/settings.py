@@ -31,7 +31,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://chat-project-zosn.onrender.com',
     'http://chat-project-zosn.onrender.com',  # 如果你也支持 HTTP
 ]
-
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # Application definition
 
 INSTALLED_APPS = [
