@@ -55,63 +55,65 @@
 
     <!-- 引入 Bootstrap JS 及其依赖 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const roomName = "{{ room_name }}";
-        const username = "{{ user.username }}";  // 从 Django 模板获取用户名
+<script>
+    const roomName = "{{ room_name }}";
+    const username = "{{ user.username }}";  // 从 Django 模板获取用户名
 
-        // 检查用户是否登录
-        if (!username) {
-            alert("请先登录");
-            window.location.href = "/admin/login/";  // 重定向到登录页面
+    // 检查用户是否登录
+    if (!username) {
+        alert("请先登录");
+        window.location.href = "/admin/login/";  // 重定向到登录页面
+    }
+
+    // 动态设置 WebSocket 协议
+    const protocol = window.location.protocol === "https:" ? "wss://" : "ws://";
+    const socketUrl = `${protocol}${window.location.host}/ws/chat/${roomName}/`;
+
+    console.log("尝试连接 WebSocket: ", socketUrl);
+    const chatSocket = new WebSocket(socketUrl);
+
+    chatSocket.onopen = function() {
+        console.log("WebSocket 连接成功");
+    };
+
+    chatSocket.onerror = function(error) {
+        console.error("WebSocket 错误:", error);
+    };
+
+    chatSocket.onmessage = function(event) {
+        console.log("收到消息:", event.data);
+        try {
+            const data = JSON.parse(event.data);
+            const chatLog = document.querySelector('#chat-log');
+            chatLog.innerHTML += `<div class="chat-message"><strong>${data.username}:</strong> ${data.message}</div>`;
+            // 自动滚动到底部
+            chatLog.scrollTop = chatLog.scrollHeight;
+        } catch (error) {
+            console.error("JSON 解析错误:", error);
         }
+    };
 
-        console.log("尝试连接 WebSocket: ", 'ws://' + window.location.host + '/ws/chat/' + roomName + '/');
-        const chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
-        );
+    chatSocket.onclose = function(event) {
+        console.error("WebSocket 连接关闭");
+    };
 
-        chatSocket.onopen = function() {
-            console.log("WebSocket 连接成功");
-        };
+    document.querySelector("#chat-message-submit").onclick = function() {
+        const messageInput = document.querySelector("#chat-message-input");
+        const message = messageInput.value;
+        if (message.trim() === "") return;
+        // 发送 JSON 格式的消息
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+        messageInput.value = '';
+    };
 
-        chatSocket.onerror = function(error) {
-            console.error("WebSocket 错误:", error);
-        };
-
-        chatSocket.onmessage = function(event) {
-            console.log("收到消息:", event.data);
-            try {
-                const data = JSON.parse(event.data);
-                const chatLog = document.querySelector('#chat-log');
-                chatLog.innerHTML += `<div class="chat-message"><strong>${data.username}:</strong> ${data.message}</div>`;
-                // 自动滚动到底部
-                chatLog.scrollTop = chatLog.scrollHeight;
-            } catch (error) {
-                console.error("JSON 解析错误:", error);
-            }
-        };
-
-        chatSocket.onclose = function(event) {
-            console.error("WebSocket 连接关闭");
-        };
-
-        document.querySelector("#chat-message-submit").onclick = function() {
-            const messageInput = document.querySelector("#chat-message-input");
-            const message = messageInput.value;
-            if (message.trim() === "") return;
-            // 发送 JSON 格式的消息
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
-            messageInput.value = '';
-        };
-
-        // 允许回车键发送消息
-        document.querySelector("#chat-message-input").addEventListener("keyup", function(event) {
-            if (event.key === "Enter") {
-                document.querySelector("#chat-message-submit").click();
-            }
-        });
-    </script>
+    // 允许回车键发送消息
+    document.querySelector("#chat-message-input").addEventListener("keyup", function(event) {
+        if (event.key === "Enter") {
+            document.querySelector("#chat-message-submit").click();
+        }
+    });
+</script>
 </body>
 </html>
