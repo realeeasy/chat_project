@@ -1,0 +1,10 @@
+{
+    "services": [
+      {
+        "name": "web",
+        "buildCommand": "docker build -t django-channels .",
+        "startCommand": "docker run -p $PORT:8000 django-channels"
+      }
+    ]
+  }
+  
