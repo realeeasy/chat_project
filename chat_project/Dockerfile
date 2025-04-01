@@ -17,4 +17,4 @@ COPY . /app/
 EXPOSE 8000
 
 # 启动时收集静态文件并运行 Daphne
-CMD [daphne -b 0.0.0.0 -p 8000 chat_project.asgi:application"]
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "chat_project.asgi:application"]
