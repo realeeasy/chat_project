@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['chat-project-zosn.onrender.com', 'localhost', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://chat-project-zosn.onrender.com',
+    'http://chat-project-zosn.onrender.com',  # 如果你也支持 HTTP
+]
 
 # Application definition
 
