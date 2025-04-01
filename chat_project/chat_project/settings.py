@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-sz42i(5pbk#^6nu6u+c9g1to_yp$p$n5z))5#h6rgu=48$nqi0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['chat-project-zosn.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
