@@ -80,7 +80,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('redis', 6379)],  # Redis地址
+            'hosts': [('redis://red-cvmijbodl3ps73942pl0:6379', 6379)],  # Redis地址
         },
     },
 }
